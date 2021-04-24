@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>All Registered Users</title>
+    <script type="text/javascript"> 
+        window.history.forward(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script>
+    <th:block th:include="layout/headerAdmin"></th:block>
+</head>
+<body>
+<div class="container">
+	<div class="form-group">
+        <div class="col-sm-10">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/admin/addUser}">Add Admin User</a></li>
+                <li><a th:href="@{/login/addUser}">Add User</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+               	<li><a th:href="@{/login/changePassword}">Change Password</a></li>
+           	</ul>
+           	<ul class="nav navbar-nav">
+               	<li><a th:href="@{/login/logout}">Logout</a></li>
+           	</ul>
+        </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(users)}">
+        <h2>Registered Users</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Mobile No</th>
+                <th>Email</th>
+                <th>Passport</th>
+                <th>Full Address</th>
+                <th>Country</th>
+                <th>View</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.firstName} + ' ' + ${user.middleName} + ' ' + ${user.lastName}">Name</td>
+                <td th:text="${user.mobileNo}">Mobile No</td>
+                <td th:text="${user.email}">Email</td>
+                <td th:text="${user.passport}">Passport</td>
+                <td th:text="${user.address} + ', ' + ${user.city} + ', ' + ${user.state} + ', ' + ${user.zipCode}">Full Address</td>
+                <td th:text="${user.country}">Country</td>
+                <td><a th:href="${'/admin/user/' + user.id + '/' + user.userName}" class="btn btn-default">View</a></td>
+                <td><a th:href="${'/admin/deleteUser/' + user.id + '/' + user.userName}" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

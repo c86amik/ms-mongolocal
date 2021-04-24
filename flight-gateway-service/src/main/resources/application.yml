@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: flight-gateway-service 
+  profiles: default
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: flight-login-service
+        uri: lb://flight-login-service
+        predicates:
+        - Path=/flight-login/**
+        filters:
+        - RewritePath=/flight-login/(?<path>.*), /$\{path}
+      - id: flight-registration-service
+        uri: lb://flight-registration-service
+        predicates:
+        - Path=/flight-registration/**
+        filters:
+        - RewritePath=/flight-registration/(?<path>.*), /$\{path}
+      - id: flight-search-service
+        uri: lb://flight-search-service
+        predicates:
+        - Path=/flight-search/**
+        filters:
+        - RewritePath=/flight-search/(?<path>.*), /$\{path}
+      - id: flight-book-service
+        uri: lb://flight-book-service
+        predicates:
+        - Path=/flight-book/**
+        filters:
+        - RewritePath=/flight-book/(?<path>.*), /$\{path}
+      - id: openapi
+        uri: http://localhost:${server.port}
+        predicates:
+        - Path=/v3/api-docs/**
+        filters:
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+server:
+  port: 7107
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 7100
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    com.gokoders.gateway: DEBUG
+  file:  /tmp/logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+
+#  cloud:
+#    config:
+#      uri: http://localhost:9090

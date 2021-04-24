@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: flight-login-service 
+  profiles: default
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: amikevergreen.whitepeaksoft@gmail.com
+    password: EvProg145$
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/gokodersflightlogin
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent-output: true
+
+server:
+  port: 7103
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 7100
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 50000
+        readTimeout: 50000
+
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    com.gokoders.login: DEBUG
+  file:  /tmp/logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+springdoc:
+  packagesToScan: com.gokoders.login
+
+#  cloud:
+#    config:
+#      uri: http://localhost:9090

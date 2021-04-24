@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: flight-proxy-service 
+  profiles: default
+
+server:
+  port: 7102
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 7100
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
+ribbon:
+  eureka:
+    enabled: false
+
+zuul:
+  ignored-services: '*'
+  routes:
+    flight-login-service:
+      path: /flight-login-service/**
+      serviceId: flight-login-service
+      url: http://localhost:7103/
+    flight-registration-service:
+      path: /flight-registration-service/**
+      serviceId: flight-registration-service
+      url: http://localhost:7104/
+    flight-search-service:
+      path: /flight-search-service/**
+      serviceId: flight-search-service
+      url: http://localhost:7105/
+    flight-book-service:
+      path: /flight-book-service/**
+      serviceId: flight-book-service
+      url: http://localhost:7106/
+      
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    com.gokoders.proxy: DEBUG
+  file:  /tmp/logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+
+#  cloud:
+#    config:
+#      uri: http://localhost:9090

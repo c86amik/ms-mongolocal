@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gokoders</groupId>
+	<artifactId>microservice-masterclass</artifactId>
+	<version>0.2</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>flight-eureka-server</module>
+		<module>flight-gateway-service</module>
+		<module>flight-proxy-service</module>
+		<module>flight-registration-service</module>		
+		<module>flight-search-service</module>
+    	<module>flight-book-service</module>
+		<module>flight-login-service</module>
+	</modules>
+	
+</project>

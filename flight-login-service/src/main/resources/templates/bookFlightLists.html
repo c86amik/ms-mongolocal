@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>All Book Flights</title>
+    <script type="text/javascript"> 
+        window.history.forward(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script>
+    <th:block th:include="layout/headerAdmin"></th:block>
+</head>
+<body>
+<div class="container">
+	<div class="form-group">
+        <div class="col-sm-10">
+            <ul class="nav navbar-nav">
+               	<li><a th:href="@{/login/changePassword}">Change Password</a></li>
+           	</ul>
+           	<ul class="nav navbar-nav">
+              	<li><a th:href="@{/login/logout}">Logout</a></li>
+          	</ul>
+        </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(bookFlights)}">
+        <h2>All Flights</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Flight Name</th>
+                <th>Customer Name</th>
+                <th>Passport</th>
+                <th>Mobile</th>
+                <th>From - To</th>
+                <th>Price</th>
+                <th>View</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="bookFlight : ${bookFlights}">
+                <td th:text="${bookFlight.flightName}">Flight Name</td>
+                <td th:text="${bookFlight.firstName} + ' ' + ${bookFlight.middleName} + ' ' + ${bookFlight.lastName}">Customer Name</td>
+                <td th:text="${bookFlight.passport}">Passport</td>
+                <td th:text="${bookFlight.mobileNo}">Mobile</td>
+                <td th:text="${bookFlight.sourceAirportName} + ' - ' + ${bookFlight.destinationAirportName}">From - To</td>
+                <td th:text="${bookFlight.bookTicketPrice}">Price</td>
+                <td><a th:href="${'/book/viewBookFlight/' + bookFlight.id + '/' + bookFlight.flightName}" class="btn btn-default">View</a></td>
+                <td><a th:href="${'/book/deleteBookFlight/' + bookFlight.id + '/' + bookFlight.flightName}" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

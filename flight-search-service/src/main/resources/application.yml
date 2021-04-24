@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: flight-search-service
+  profiles: default
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/gokodersflightsearch
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent-output: true
+
+server:
+  port: 7105
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 7100
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+    
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 50000
+        readTimeout: 50000
+
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    com.gokoders.flight: DEBUG
+  file:  /tmp/logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+springdoc:
+  packagesToScan: com.gokoders.flight
+
+#  cloud:
+#    config:
+#      uri: http://localhost:9090

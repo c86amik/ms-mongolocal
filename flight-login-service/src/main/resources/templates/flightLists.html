@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>All Flights</title>
+    <script type="text/javascript"> 
+        window.history.forward(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+<div class="container">
+	<div class="form-group">
+        <div class="col-sm-10">
+            <ul class="nav navbar-nav">
+               	<li><a th:href="@{/login/changePassword}">Change Password</a></li>
+           	</ul>
+           	<ul class="nav navbar-nav">
+              	<li><a th:href="@{/login/logout}">Logout</a></li>
+          	</ul>
+        </div>
+        <div class="col-sm-2">
+            <a th:href="${'/flight/searchFlight/user'}" class="btn btn-danger">Search</a>
+        </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(flights)}">
+        <h2>All Flights</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Flight Name</th>
+                <th>Flight Type</th>
+                <th>Source Airport Name</th>
+                <th>Destination Airport Name</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Book</th>
+            </tr>
+            <tr th:each="flight : ${flights}">
+                <td th:text="${flight.flightName}">Flight Name</td>
+                <td th:text="${flight.flightType}">Flight Type</td>
+                <td th:text="${flight.sourceAirportName}">Source Airport Name</td>
+                <td th:text="${flight.destinationAirportName}">Destination Airport Name</td>
+                <td th:text="${flight.bookTicketPrice}">Price</td>
+                <td th:text="${flight.duration}">Duration</td>
+                <td><a th:href="${'/book/details/' + flight.id + '/' + flight.flightName}" class="btn btn-default">Book</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
